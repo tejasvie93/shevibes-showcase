@@ -319,13 +319,13 @@ export default function SubmitPage() {
                   key: "hardest_thing" as const,
                   label: "What was the hardest part?",
                   placeholder: "The moment you almost gave up, or the bug that took hours...",
-                  required: true,
+                  required: false,
                 },
                 {
                   key: "what_surprised_you" as const,
                   label: "What surprised you?",
                   placeholder: "Something unexpected — good or bad — from the build...",
-                  required: true,
+                  required: false,
                 },
               ].map(({ key, label, placeholder, required }) => (
                 <FormRow key={key}>
