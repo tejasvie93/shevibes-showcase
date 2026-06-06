@@ -89,27 +89,21 @@ export default async function GalleryPage({ searchParams }: Props) {
         </p>
 
         {/* CTAs */}
-        <div style={{ display: "flex", alignItems: "center", gap: 24, flexWrap: "wrap" }}>
-          <a
-            href="#projects"
+        <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
+          <Link
+            href="/submit"
             className="btn-gold"
             style={{ borderRadius: 99, padding: "14px 32px", fontSize: 16 }}
           >
-            Meet the builders →
-          </a>
-          <Link
-            href="/submit"
-            style={{
-              color: "var(--text-secondary)",
-              fontSize: 15,
-              textDecoration: "none",
-              borderBottom: "1px solid var(--border)",
-              paddingBottom: 2,
-              transition: "color 0.15s, border-color 0.15s",
-            }}
-          >
-            or add your project
+            Add your project →
           </Link>
+          <a
+            href="#projects"
+            className="btn-ghost"
+            style={{ borderRadius: 99, padding: "14px 32px", fontSize: 16 }}
+          >
+            Meet the builders
+          </a>
         </div>
 
         {/* Stats */}
