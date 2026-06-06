@@ -2,6 +2,8 @@ import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import type { Project } from "@/lib/database.types";
 
+const PER_PAGE = 5;
+
 async function getProjects(): Promise<Project[]> {
   try {
     const { data, error } = await supabase
@@ -19,15 +21,25 @@ async function getProjects(): Promise<Project[]> {
 
 export const dynamic = "force-dynamic";
 
-export default async function GalleryPage() {
-  const projects = await getProjects();
+interface Props {
+  searchParams: Promise<{ page?: string }>;
+}
+
+export default async function GalleryPage({ searchParams }: Props) {
+  const { page: pageParam } = await searchParams;
+  const currentPage = Math.max(1, parseInt(pageParam ?? "1", 10) || 1);
+
+  const allProjects = await getProjects();
+  const totalPages = Math.max(1, Math.ceil(allProjects.length / PER_PAGE));
+  const safePage = Math.min(currentPage, totalPages);
+  const projects = allProjects.slice((safePage - 1) * PER_PAGE, safePage * PER_PAGE);
 
   return (
     <div>
       {/* Hero */}
       <section
         style={{
-          maxWidth: 1200,
+          maxWidth: 800,
           margin: "0 auto",
           padding: "72px 24px 48px",
           textAlign: "center",
@@ -64,7 +76,7 @@ export default async function GalleryPage() {
 
         <h1
           style={{
-            fontSize: "clamp(36px, 6vw, 64px)",
+            fontSize: "clamp(36px, 6vw, 60px)",
             fontWeight: 900,
             lineHeight: 1.1,
             margin: "0 0 16px",
@@ -79,9 +91,9 @@ export default async function GalleryPage() {
         <p
           style={{
             color: "var(--text-secondary)",
-            fontSize: 18,
+            fontSize: 17,
             lineHeight: 1.6,
-            maxWidth: 560,
+            maxWidth: 520,
             margin: "0 auto 32px",
           }}
         >
@@ -93,31 +105,27 @@ export default async function GalleryPage() {
           <Link href="/submit" className="btn-gold">
             Add Your Project →
           </Link>
-          <a href="#projects" className="btn-ghost">
-            Browse {projects.length} Projects
-          </a>
         </div>
 
-        {/* Stats bar */}
+        {/* Stats */}
         <div
           style={{
             display: "flex",
             gap: 40,
             justifyContent: "center",
-            marginTop: 56,
+            marginTop: 48,
             flexWrap: "wrap",
           }}
         >
           {[
-            { label: "Projects shipped", value: projects.length },
+            { label: "Projects shipped", value: allProjects.length },
             { label: "Days of building", value: 66 },
             { label: "Cohort", value: "Cohort 0" },
-            { label: "Programme", value: "SheVibes × PiFo" },
           ].map((stat) => (
             <div key={stat.label} style={{ textAlign: "center" }}>
               <div
                 style={{
-                  fontSize: 28,
+                  fontSize: 26,
                   fontWeight: 800,
                   color: "var(--gold)",
                   letterSpacing: "-0.5px",
@@ -138,54 +146,107 @@ export default async function GalleryPage() {
         style={{
           height: 1,
           background: "linear-gradient(to right, transparent, var(--border), transparent)",
-          maxWidth: 1200,
+          maxWidth: 800,
           margin: "0 auto",
         }}
       />
 
-      {/* Projects grid */}
+      {/* Project list */}
       <section
         id="projects"
-        style={{ maxWidth: 1200, margin: "0 auto", padding: "56px 24px 80px" }}
+        style={{ maxWidth: 800, margin: "0 auto", padding: "48px 24px 80px" }}
       >
-        {projects.length === 0 ? (
+        {allProjects.length === 0 ? (
           <EmptyState />
         ) : (
           <>
+            {/* List header */}
             <div
               style={{
                 display: "flex",
-                alignItems: "baseline",
+                alignItems: "center",
                 justifyContent: "space-between",
-                marginBottom: 32,
+                marginBottom: 20,
               }}
             >
               <h2
-                style={{
-                  fontSize: 22,
-                  fontWeight: 700,
-                  margin: 0,
-                  color: "var(--text-primary)",
-                }}
+                style={{ fontSize: 18, fontWeight: 700, margin: 0, color: "var(--text-primary)" }}
               >
                 All Projects
               </h2>
               <span style={{ fontSize: 13, color: "var(--text-muted)" }}>
-                {projects.length} submitted
+                {(safePage - 1) * PER_PAGE + 1}–
+                {Math.min(safePage * PER_PAGE, allProjects.length)} of {allProjects.length}
               </span>
             </div>
 
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
-                gap: 20,
-              }}
-            >
-              {projects.map((project) => (
-                <ProjectCard key={project.id} project={project} />
+            {/* Project rows */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              {projects.map((project, i) => (
+                <ProjectRow
+                  key={project.id}
+                  project={project}
+                  index={(safePage - 1) * PER_PAGE + i + 1}
+                />
               ))}
             </div>
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 8,
+                  marginTop: 40,
+                }}
+              >
+                {safePage > 1 && (
+                  <Link
+                    href={`/?page=${safePage - 1}#projects`}
+                    className="btn-ghost"
+                    style={{ padding: "8px 18px", fontSize: 13 }}
+                  >
+                    ← Previous
+                  </Link>
+                )}
+
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                  <Link
+                    key={p}
+                    href={`/?page=${p}#projects`}
+                    style={{
+                      width: 36,
+                      height: 36,
+                      borderRadius: 8,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: 13,
+                      fontWeight: p === safePage ? 700 : 400,
+                      textDecoration: "none",
+                      background: p === safePage ? "var(--gold)" : "var(--surface)",
+                      color: p === safePage ? "#0d1117" : "var(--text-secondary)",
+                      border: `1px solid ${p === safePage ? "var(--gold)" : "var(--border)"}`,
+                      transition: "all 0.15s",
+                    }}
+                  >
+                    {p}
+                  </Link>
+                ))}
+
+                {safePage < totalPages && (
+                  <Link
+                    href={`/?page=${safePage + 1}#projects`}
+                    className="btn-ghost"
+                    style={{ padding: "8px 18px", fontSize: 13 }}
+                  >
+                    Next →
+                  </Link>
+                )}
+              </div>
+            )}
           </>
         )}
       </section>
@@ -193,7 +254,7 @@ export default async function GalleryPage() {
   );
 }
 
-function ProjectCard({ project }: { project: Project }) {
+function ProjectRow({ project, index }: { project: Project; index: number }) {
   return (
     <Link href={`/project/${project.id}`} style={{ textDecoration: "none" }}>
       <div
@@ -202,111 +263,88 @@ function ProjectCard({ project }: { project: Project }) {
           background: "var(--surface)",
           border: "1px solid var(--border)",
           borderRadius: 12,
-          padding: "24px",
-          cursor: "pointer",
-          height: "100%",
+          padding: "20px 24px",
           display: "flex",
-          flexDirection: "column",
-          gap: 16,
+          alignItems: "center",
+          gap: 20,
+          cursor: "pointer",
         }}
       >
-        {/* Header */}
-        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
-          <div>
-            <div
-              style={{
-                width: 40,
-                height: 40,
-                borderRadius: 10,
-                background: "linear-gradient(135deg, var(--gold-dim), rgba(245,166,35,0.04))",
-                border: "1px solid rgba(245,166,35,0.2)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: 18,
-                marginBottom: 12,
-              }}
-            >
-              🛠️
-            </div>
-            <h3
-              style={{
-                margin: 0,
-                fontSize: 17,
-                fontWeight: 700,
-                color: "var(--text-primary)",
-                letterSpacing: "-0.3px",
-              }}
-            >
-              {project.project_name}
-            </h3>
-          </div>
-          {project.day_number && (
-            <span className="day-badge">Day {project.day_number}</span>
-          )}
-        </div>
-
-        {/* Description */}
-        <p
-          style={{
-            margin: 0,
-            fontSize: 13,
-            color: "var(--text-secondary)",
-            lineHeight: 1.6,
-            flex: 1,
-            display: "-webkit-box",
-            WebkitLineClamp: 3,
-            WebkitBoxOrient: "vertical",
-            overflow: "hidden",
-          } as React.CSSProperties}
-        >
-          {project.what_you_built}
-        </p>
-
-        {/* Tags */}
-        {project.tags && project.tags.length > 0 && (
-          <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-            {project.tags.slice(0, 3).map((tag) => (
-              <span key={tag} className="tag-pill">
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
-
-        {/* Footer */}
+        {/* Index number */}
         <div
           style={{
+            width: 36,
+            height: 36,
+            borderRadius: 8,
+            background: "var(--surface-2)",
+            border: "1px solid var(--border)",
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
-            paddingTop: 12,
-            borderTop: "1px solid var(--border)",
+            justifyContent: "center",
+            fontSize: 13,
+            fontWeight: 700,
+            color: "var(--text-muted)",
+            flexShrink: 0,
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <div
+          {index}
+        </div>
+
+        {/* Project info */}
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div
+            style={{
+              fontSize: 16,
+              fontWeight: 700,
+              color: "var(--text-primary)",
+              letterSpacing: "-0.2px",
+              marginBottom: 4,
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {project.project_name}
+          </div>
+          <div
+            style={{
+              fontSize: 13,
+              color: "var(--text-secondary)",
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+            }}
+          >
+            <span
               style={{
-                width: 28,
-                height: 28,
+                width: 20,
+                height: 20,
                 borderRadius: "50%",
-                background: "var(--surface-2)",
-                border: "1px solid var(--border)",
-                display: "flex",
+                background: "var(--gold-dim)",
+                border: "1px solid rgba(245,166,35,0.2)",
+                display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: 12,
+                fontSize: 10,
                 fontWeight: 700,
                 color: "var(--gold)",
+                flexShrink: 0,
               }}
             >
               {project.builder_name.charAt(0).toUpperCase()}
-            </div>
-            <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>
-              {project.builder_name}
             </span>
+            Built by {project.builder_name}
           </div>
-          <span style={{ fontSize: 12, color: "var(--gold)", fontWeight: 600 }}>View →</span>
+        </div>
+
+        {/* Right side */}
+        <div style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
+          {project.day_number && (
+            <span className="day-badge">Day {project.day_number}</span>
+          )}
+          <span style={{ fontSize: 13, color: "var(--gold)", fontWeight: 600 }}>
+            View →
+          </span>
         </div>
       </div>
     </Link>
