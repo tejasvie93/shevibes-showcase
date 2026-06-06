@@ -105,6 +105,9 @@ export default async function GalleryPage({ searchParams }: Props) {
           <Link href="/submit" className="btn-gold">
             Add Your Project →
           </Link>
+          <a href="#projects" className="btn-ghost">
+            Browse Projects
+          </a>
         </div>
 
         {/* Stats */}
@@ -120,7 +123,6 @@ export default async function GalleryPage({ searchParams }: Props) {
           {[
             { label: "Projects shipped", value: allProjects.length },
             { label: "Days of building", value: 66 },
-            { label: "Cohort", value: "Cohort 0" },
           ].map((stat) => (
             <div key={stat.label} style={{ textAlign: "center" }}>
               <div

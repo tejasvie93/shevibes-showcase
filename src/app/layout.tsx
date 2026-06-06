@@ -67,9 +67,6 @@ export default function RootLayout({
               <Link href="/" className="btn-ghost" style={{ padding: "6px 14px", fontSize: 13 }}>
                 Gallery
               </Link>
-              <Link href="/submit" className="btn-gold" style={{ padding: "8px 18px", fontSize: 13 }}>
-                Submit Project
-              </Link>
             </div>
           </div>
         </nav>
@@ -85,7 +82,7 @@ export default function RootLayout({
             fontSize: 13,
           }}
         >
-          SheVibes Cohort 0 · 66 Days of Building with AI · Powered by PiFo
+          Powered by PiFo
         </footer>
       </body>
     </html>
