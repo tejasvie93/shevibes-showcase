@@ -98,7 +98,7 @@ export default async function GalleryPage({ searchParams }: Props) {
             Add your project →
           </Link>
           <a
-            href="#projects"
+            href="#builders"
             className="btn-ghost"
             style={{ borderRadius: 99, padding: "14px 32px", fontSize: 16 }}
           >
@@ -145,6 +145,56 @@ export default async function GalleryPage({ searchParams }: Props) {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Divider */}
+      <div
+        style={{
+          height: 1,
+          background: "linear-gradient(to right, transparent, var(--border), transparent)",
+          maxWidth: 800,
+          margin: "0 auto",
+        }}
+      />
+
+      {/* Builders directory */}
+      <section
+        id="builders"
+        style={{ maxWidth: 800, margin: "0 auto", padding: "56px 24px 0" }}
+      >
+        <h2
+          style={{
+            fontSize: 13,
+            fontWeight: 700,
+            letterSpacing: "1.5px",
+            textTransform: "uppercase",
+            color: "var(--gold)",
+            margin: "0 0 28px",
+          }}
+        >
+          Meet the builders
+        </h2>
+
+        {allProjects.length === 0 ? (
+          <p style={{ color: "var(--text-muted)", fontSize: 14 }}>No builders yet — be the first.</p>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            {allProjects.map((project, i) => (
+              <BuilderRow key={project.id} project={project} index={i + 1} />
+            ))}
+          </div>
+        )}
+
+        {/* Browse Projects pill */}
+        <div style={{ marginTop: 40, paddingBottom: 56 }}>
+          <a
+            href="#projects"
+            className="btn-ghost"
+            style={{ borderRadius: 99, padding: "12px 28px", fontSize: 15 }}
+          >
+            Browse Projects
+          </a>
         </div>
       </section>
 
@@ -257,6 +307,110 @@ export default async function GalleryPage({ searchParams }: Props) {
           </>
         )}
       </section>
+    </div>
+  );
+}
+
+function BuilderRow({ project, index }: { project: Project; index: number }) {
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 16,
+        padding: "16px 0",
+        borderBottom: "1px solid var(--border)",
+      }}
+    >
+      {/* Index */}
+      <span
+        style={{
+          fontSize: 12,
+          fontWeight: 700,
+          color: "var(--text-muted)",
+          width: 20,
+          flexShrink: 0,
+          textAlign: "right",
+        }}
+      >
+        {index}
+      </span>
+
+      {/* Avatar */}
+      <div
+        style={{
+          width: 36,
+          height: 36,
+          borderRadius: "50%",
+          background: "var(--gold-dim)",
+          border: "1px solid rgba(245,166,35,0.25)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: 14,
+          fontWeight: 800,
+          color: "var(--gold)",
+          flexShrink: 0,
+        }}
+      >
+        {project.builder_name.charAt(0).toUpperCase()}
+      </div>
+
+      {/* Name + LinkedIn */}
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div
+          style={{
+            fontSize: 15,
+            fontWeight: 700,
+            color: "var(--text-primary)",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
+          {project.builder_name}
+          {project.builder_linkedin && (
+            <a
+              href={project.builder_linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                marginLeft: 8,
+                fontSize: 11,
+                fontWeight: 600,
+                color: "var(--text-muted)",
+                textDecoration: "none",
+                border: "1px solid var(--border)",
+                borderRadius: 4,
+                padding: "1px 6px",
+                letterSpacing: "0.3px",
+                verticalAlign: "middle",
+              }}
+            >
+              LinkedIn ↗
+            </a>
+          )}
+        </div>
+      </div>
+
+      {/* What they built */}
+      <Link
+        href={`/project/${project.id}`}
+        style={{
+          fontSize: 13,
+          fontWeight: 600,
+          color: "var(--gold)",
+          textDecoration: "none",
+          display: "flex",
+          alignItems: "center",
+          gap: 4,
+          flexShrink: 0,
+          whiteSpace: "nowrap",
+        }}
+      >
+        {project.project_name} ↗
+      </Link>
     </div>
   );
 }
