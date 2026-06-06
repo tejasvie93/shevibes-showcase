@@ -45,22 +45,39 @@ export default async function ProjectPage({ params }: Props) {
 
   return (
     <div style={{ maxWidth: 800, margin: "0 auto", padding: "40px 24px 80px" }}>
-      {/* Back */}
-      <Link
-        href="/"
-        style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: 6,
-          color: "var(--text-secondary)",
-          textDecoration: "none",
-          fontSize: 14,
-          marginBottom: 32,
-          transition: "color 0.15s",
-        }}
-      >
-        ← Back to Gallery
-      </Link>
+      {/* Back + Edit */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 32 }}>
+        <Link
+          href="/"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 6,
+            color: "var(--text-secondary)",
+            textDecoration: "none",
+            fontSize: 14,
+            transition: "color 0.15s",
+          }}
+        >
+          ← Back to Gallery
+        </Link>
+        <Link
+          href={`/project/${project.id}/edit`}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 6,
+            color: "var(--text-muted)",
+            textDecoration: "none",
+            fontSize: 13,
+            border: "1px solid var(--border)",
+            borderRadius: 8,
+            padding: "6px 14px",
+          }}
+        >
+          Edit project
+        </Link>
+      </div>
 
       {/* Header */}
       <div
