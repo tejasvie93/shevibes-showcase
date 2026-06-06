@@ -50,6 +50,7 @@ export async function PATCH(
   if ("tags" in updates) {
     updateData.tags = Array.isArray(updates.tags) ? updates.tags.filter(Boolean) : null;
   }
+  updateData.updated_at = new Date().toISOString();
 
   const { data, error } = await supabase
     .from("projects")

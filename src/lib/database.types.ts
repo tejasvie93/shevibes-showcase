@@ -1,6 +1,7 @@
 export interface ProjectRow {
   id: string;
   created_at: string;
+  updated_at: string | null;
   builder_name: string;
   builder_email: string;
   builder_linkedin: string | null;

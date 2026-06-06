@@ -269,6 +269,27 @@ export default async function ProjectPage({ params }: Props) {
           Submit Your Project
         </Link>
       </div>
+
+      {/* Last edited */}
+      {project.updated_at && (
+        <p
+          style={{
+            marginTop: 24,
+            textAlign: "center",
+            fontSize: 12,
+            color: "var(--text-muted)",
+          }}
+        >
+          Last edited{" "}
+          {new Date(project.updated_at).toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
+        </p>
+      )}
     </div>
   );
 }
