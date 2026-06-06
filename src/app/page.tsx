@@ -41,101 +41,112 @@ export default async function GalleryPage({ searchParams }: Props) {
         style={{
           maxWidth: 800,
           margin: "0 auto",
-          padding: "72px 24px 48px",
-          textAlign: "center",
+          padding: "72px 24px 56px",
         }}
       >
-        <div
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 8,
-            background: "var(--gold-dim)",
-            border: "1px solid rgba(245,166,35,0.2)",
-            borderRadius: 99,
-            padding: "5px 14px",
-            marginBottom: 24,
-            fontSize: 12,
-            color: "var(--gold)",
-            fontWeight: 600,
-            letterSpacing: "0.5px",
-            textTransform: "uppercase",
-          }}
-        >
-          <span
-            style={{
-              width: 6,
-              height: 6,
-              borderRadius: "50%",
-              background: "var(--gold)",
-              display: "inline-block",
-            }}
-          />
-          SheVibes Cohort 0 · 66 Days
-        </div>
-
-        <h1
-          style={{
-            fontSize: "clamp(36px, 6vw, 60px)",
-            fontWeight: 900,
-            lineHeight: 1.1,
-            margin: "0 0 16px",
-            letterSpacing: "-1.5px",
-          }}
-        >
-          <span className="gold-text">66 days.</span>
-          <br />
-          <span style={{ color: "var(--text-primary)" }}>Built with AI.</span>
-        </h1>
-
+        {/* Label */}
         <p
           style={{
-            color: "var(--text-secondary)",
-            fontSize: 17,
-            lineHeight: 1.6,
-            maxWidth: 520,
-            margin: "0 auto 32px",
+            fontSize: 12,
+            fontWeight: 700,
+            letterSpacing: "1.5px",
+            textTransform: "uppercase",
+            color: "var(--gold)",
+            margin: "0 0 24px",
           }}
         >
-          Every project here was built from scratch — a real product, a real problem, a real
-          woman who built it.
+          SheVibes Cohort 0
         </p>
 
-        <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-          <Link href="/submit" className="btn-gold">
-            Add Your Project →
-          </Link>
-          <a href="#projects" className="btn-ghost">
-            Browse Projects
+        {/* Heading */}
+        <h1
+          style={{
+            fontSize: "clamp(40px, 7vw, 72px)",
+            fontWeight: 900,
+            lineHeight: 1.05,
+            letterSpacing: "-2px",
+            margin: "0 0 28px",
+            color: "var(--text-primary)",
+          }}
+        >
+          66 days.{" "}
+          <span className="gold-text">One<br />woman</span>{" "}
+          behind<br />every build.
+        </h1>
+
+        {/* Subtext */}
+        <p
+          style={{
+            fontSize: 18,
+            lineHeight: 1.65,
+            margin: "0 0 40px",
+            maxWidth: 560,
+          }}
+        >
+          <span style={{ color: "var(--text-secondary)" }}>No demos, no dummies. </span>
+          <span className="gold-text">A real problem, a real product, and the woman who shipped it</span>
+          <span style={{ color: "var(--text-secondary)" }}> — built from scratch with AI over 66 days.</span>
+        </p>
+
+        {/* CTAs */}
+        <div style={{ display: "flex", alignItems: "center", gap: 24, flexWrap: "wrap" }}>
+          <a
+            href="#projects"
+            className="btn-gold"
+            style={{ borderRadius: 99, padding: "14px 32px", fontSize: 16 }}
+          >
+            Meet the builders →
           </a>
+          <Link
+            href="/submit"
+            style={{
+              color: "var(--text-secondary)",
+              fontSize: 15,
+              textDecoration: "none",
+              borderBottom: "1px solid var(--border)",
+              paddingBottom: 2,
+              transition: "color 0.15s, border-color 0.15s",
+            }}
+          >
+            or add your project
+          </Link>
         </div>
 
         {/* Stats */}
         <div
           style={{
             display: "flex",
-            gap: 40,
-            justifyContent: "center",
-            marginTop: 48,
+            gap: 56,
+            marginTop: 64,
             flexWrap: "wrap",
           }}
         >
           {[
-            { label: "Projects shipped", value: allProjects.length },
+            { label: "Builders shipped", value: allProjects.length },
             { label: "Days of building", value: 66 },
           ].map((stat) => (
-            <div key={stat.label} style={{ textAlign: "center" }}>
+            <div key={stat.label}>
               <div
                 style={{
-                  fontSize: 26,
-                  fontWeight: 800,
-                  color: "var(--gold)",
-                  letterSpacing: "-0.5px",
+                  fontSize: "clamp(40px, 6vw, 64px)",
+                  fontWeight: 900,
+                  color: "var(--text-primary)",
+                  letterSpacing: "-2px",
+                  lineHeight: 1,
                 }}
               >
                 {stat.value}
               </div>
-              <div style={{ fontSize: 12, color: "var(--text-muted)", marginTop: 2 }}>
+              <div
+                style={{
+                  fontSize: 11,
+                  fontWeight: 700,
+                  color: "var(--text-muted)",
+                  letterSpacing: "1.5px",
+                  textTransform: "uppercase",
+                  marginTop: 6,
+                }}
+              >
                 {stat.label}
               </div>
             </div>
