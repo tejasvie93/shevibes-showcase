@@ -35,8 +35,12 @@ export default async function ProjectPage({ params }: Props) {
     { label: "What they built", content: project.what_you_built, emoji: "🛠️" },
     { label: "Who it's for", content: project.who_is_it_for, emoji: "👤" },
     { label: "Problem it solves", content: project.problem_it_solves, emoji: "💡" },
-    { label: "Hardest part", content: project.hardest_thing, emoji: "🔥" },
-    { label: "What surprised them", content: project.what_surprised_you, emoji: "✨" },
+    ...(project.hardest_thing
+      ? [{ label: "Hardest part", content: project.hardest_thing, emoji: "🔥" }]
+      : []),
+    ...(project.what_surprised_you
+      ? [{ label: "What surprised them", content: project.what_surprised_you, emoji: "✨" }]
+      : []),
   ];
 
   return (

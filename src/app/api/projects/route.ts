@@ -21,8 +21,6 @@ export async function POST(request: NextRequest) {
     "what_you_built",
     "who_is_it_for",
     "problem_it_solves",
-    "hardest_thing",
-    "what_surprised_you",
   ];
 
   for (const field of required) {
@@ -53,8 +51,8 @@ export async function POST(request: NextRequest) {
     what_you_built: projectData.what_you_built.trim(),
     who_is_it_for: projectData.who_is_it_for.trim(),
     problem_it_solves: projectData.problem_it_solves.trim(),
-    hardest_thing: projectData.hardest_thing.trim(),
-    what_surprised_you: projectData.what_surprised_you.trim(),
+    hardest_thing: projectData.hardest_thing?.trim() || "",
+    what_surprised_you: projectData.what_surprised_you?.trim() || "",
     day_number: projectData.day_number ? parseInt(projectData.day_number) : null,
     tags: projectData.tags ? (projectData.tags as string[]).filter(Boolean) : null,
     approved: true,
