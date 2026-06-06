@@ -7,31 +7,23 @@ export async function PATCH(
 ) {
   const { id } = await params;
   const body = await request.json();
-  const { email, code, ...updates } = body;
+  const { code, ...updates } = body;
 
   const validCode = process.env.COHORT_CODE;
   if (!validCode || !code || code.trim().toLowerCase() !== validCode.toLowerCase()) {
     return Response.json({ error: "Invalid cohort code" }, { status: 401 });
   }
 
-  if (!email?.trim()) {
-    return Response.json({ error: "Email is required" }, { status: 400 });
-  }
-
   const supabase = createServiceClient();
 
   const { data: existing, error: fetchError } = await supabase
     .from("projects")
-    .select("builder_email")
+    .select("id")
     .eq("id", id)
     .single();
 
   if (fetchError || !existing) {
     return Response.json({ error: "Project not found" }, { status: 404 });
-  }
-
-  if (existing.builder_email.toLowerCase() !== email.toLowerCase().trim()) {
-    return Response.json({ error: "Email does not match this project" }, { status: 403 });
   }
 
   if (updates.live_url) {

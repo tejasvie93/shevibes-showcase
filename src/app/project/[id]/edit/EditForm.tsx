@@ -25,7 +25,6 @@ interface FormData {
 export default function EditForm({ project }: { project: Project }) {
   const router = useRouter();
   const [step, setStep] = useState<Step>("verify");
-  const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -80,7 +79,7 @@ export default function EditForm({ project }: { project: Project }) {
       const res = await fetch(`/api/projects/${project.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, tags: tagsArray, email, code }),
+        body: JSON.stringify({ ...form, tags: tagsArray, code }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
@@ -165,18 +164,6 @@ export default function EditForm({ project }: { project: Project }) {
         <form onSubmit={handleVerify}>
           <Card>
             <FormRow>
-              <Label required>Your email</Label>
-              <input
-                type="email"
-                className="form-input"
-                placeholder="The email you submitted with"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                autoFocus
-              />
-            </FormRow>
-            <FormRow>
               <Label required>SheVibes cohort code</Label>
               <input
                 type="text"
@@ -185,13 +172,14 @@ export default function EditForm({ project }: { project: Project }) {
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
                 required
+                autoFocus
                 style={{ letterSpacing: "2px" }}
               />
             </FormRow>
             <button
               type="submit"
               className="btn-gold"
-              disabled={loading || !email.trim() || !code.trim()}
+              disabled={loading || !code.trim()}
               style={{ marginTop: 8, width: "100%" }}
             >
               {loading ? "Verifying..." : "Unlock editor →"}
@@ -216,7 +204,7 @@ export default function EditForm({ project }: { project: Project }) {
               color: "#4ade80",
             }}
           >
-            ✓ Verified as {email} — edit your project below
+            ✓ Code verified — edit your project below
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
