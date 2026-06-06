@@ -64,7 +64,7 @@ export default function RootLayout({
             </Link>
 
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              <Link href="/" className="btn-ghost" style={{ padding: "6px 14px", fontSize: 13 }}>
+              <Link href="/#projects" className="btn-ghost" style={{ padding: "6px 14px", fontSize: 13 }}>
                 Gallery
               </Link>
             </div>
