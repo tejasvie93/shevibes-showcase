@@ -89,14 +89,23 @@ export default async function GalleryPage({ searchParams }: Props) {
         </p>
 
         {/* CTAs */}
-        <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
-          <Link
-            href="/submit"
-            className="btn-gold"
-            style={{ borderRadius: 99, padding: "14px 32px", fontSize: 16 }}
-          >
-            Add your project →
-          </Link>
+        <div style={{ display: "flex", alignItems: "flex-start", gap: 16, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            <Link
+              href="/submit"
+              className="btn-gold"
+              style={{ borderRadius: 99, padding: "14px 32px", fontSize: 16 }}
+            >
+              Add your project →
+            </Link>
+            <a
+              href="#projects"
+              className="btn-ghost"
+              style={{ borderRadius: 99, padding: "10px 24px", fontSize: 14 }}
+            >
+              Browse Projects
+            </a>
+          </div>
           <a
             href="#builders"
             className="btn-ghost"
@@ -186,16 +195,7 @@ export default async function GalleryPage({ searchParams }: Props) {
           </div>
         )}
 
-        {/* Browse Projects pill */}
-        <div style={{ marginTop: 40, paddingBottom: 56 }}>
-          <a
-            href="#projects"
-            className="btn-ghost"
-            style={{ borderRadius: 99, padding: "12px 28px", fontSize: 15 }}
-          >
-            Browse Projects
-          </a>
-        </div>
+        <div style={{ paddingBottom: 56 }} />
       </section>
 
       {/* Divider */}
@@ -374,7 +374,6 @@ function BuilderRow({ project, index }: { project: Project; index: number }) {
               href={project.builder_linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
               style={{
                 marginLeft: 8,
                 fontSize: 11,
