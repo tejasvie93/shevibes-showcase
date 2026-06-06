@@ -23,7 +23,7 @@ async function getProject(id: string): Promise<Project | null> {
   }
 }
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default async function ProjectPage({ params }: Props) {
   const { id } = await params;
