@@ -358,16 +358,39 @@ export default function SubmitPage() {
       {step === "success" && (
         <Card>
           <div style={{ textAlign: "center", padding: "20px 0" }}>
-            <div style={{ fontSize: 56, marginBottom: 16 }}>🎉</div>
+            {/* Check circle */}
+            <div
+              style={{
+                width: 72,
+                height: 72,
+                borderRadius: "50%",
+                background: "var(--gold)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                margin: "0 auto 20px",
+              }}
+            >
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M5 13l4 4L19 7"
+                  stroke="#0d1117"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
             <h2
               style={{
                 margin: "0 0 8px",
-                fontSize: 24,
-                fontWeight: 800,
+                fontSize: 28,
+                fontWeight: 900,
                 color: "var(--text-primary)",
+                letterSpacing: "-0.5px",
               }}
             >
-              Your project is live!
+              Done!
             </h2>
             <p
               style={{
