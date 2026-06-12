@@ -53,6 +53,7 @@ export async function POST(request: NextRequest) {
     problem_it_solves: projectData.problem_it_solves.trim(),
     hardest_thing: projectData.hardest_thing?.trim() || "",
     what_surprised_you: projectData.what_surprised_you?.trim() || "",
+    linkedin_post_url: projectData.linkedin_post_url?.trim() || null,
     day_number: projectData.day_number ? parseInt(projectData.day_number) : null,
     tags: projectData.tags ? (projectData.tags as string[]).filter(Boolean) : null,
     approved: true,

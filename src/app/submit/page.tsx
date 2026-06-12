@@ -10,6 +10,7 @@ interface FormData {
   builder_email: string;
   builder_bio: string;
   builder_linkedin: string;
+  linkedin_post_url: string;
   project_name: string;
   live_url: string;
   what_you_built: string;
@@ -26,6 +27,7 @@ const INITIAL_FORM: FormData = {
   builder_email: "",
   builder_bio: "",
   builder_linkedin: "",
+  linkedin_post_url: "",
   project_name: "",
   live_url: "",
   what_you_built: "",
@@ -244,6 +246,16 @@ export default function SubmitPage() {
                   placeholder="https://linkedin.com/in/yourhandle"
                   value={form.builder_linkedin}
                   onChange={(e) => updateForm("builder_linkedin", e.target.value)}
+                />
+              </FormRow>
+              <FormRow>
+                <Label>You went public?</Label>
+                <input
+                  type="url"
+                  className="form-input"
+                  placeholder="The LinkedIn post where you told the world — paste the link"
+                  value={form.linkedin_post_url}
+                  onChange={(e) => updateForm("linkedin_post_url", e.target.value)}
                 />
               </FormRow>
             </Card>

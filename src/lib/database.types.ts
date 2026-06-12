@@ -13,6 +13,7 @@ export interface ProjectRow {
   problem_it_solves: string;
   hardest_thing: string;
   what_surprised_you: string;
+  linkedin_post_url: string | null;
   day_number: number | null;
   tags: string[] | null;
   approved: boolean;
@@ -30,6 +31,7 @@ export interface ProjectInsert {
   problem_it_solves: string;
   hardest_thing: string;
   what_surprised_you: string;
+  linkedin_post_url?: string | null;
   day_number?: number | null;
   tags?: string[] | null;
   approved?: boolean;

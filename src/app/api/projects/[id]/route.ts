@@ -38,7 +38,7 @@ export async function PATCH(
   const stringFields = [
     "builder_name", "builder_linkedin", "builder_bio",
     "project_name", "live_url", "what_you_built", "who_is_it_for",
-    "problem_it_solves", "hardest_thing", "what_surprised_you",
+    "problem_it_solves", "hardest_thing", "what_surprised_you", "linkedin_post_url",
   ];
 
   for (const f of stringFields) {

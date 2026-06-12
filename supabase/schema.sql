@@ -17,6 +17,7 @@ create table if not exists projects (
   problem_it_solves  text        not null,
   hardest_thing      text,                    -- optional
   what_surprised_you text,                    -- optional
+  linkedin_post_url  text,                    -- optional: the post where they announced it
   day_number         integer     check (day_number >= 1 and day_number <= 66),
   tags               text[],
   approved           boolean     default true

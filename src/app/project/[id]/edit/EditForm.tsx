@@ -11,6 +11,7 @@ interface FormData {
   builder_name: string;
   builder_bio: string;
   builder_linkedin: string;
+  linkedin_post_url: string;
   project_name: string;
   live_url: string;
   what_you_built: string;
@@ -32,6 +33,7 @@ export default function EditForm({ project }: { project: Project }) {
     builder_name: project.builder_name,
     builder_bio: project.builder_bio ?? "",
     builder_linkedin: project.builder_linkedin ?? "",
+    linkedin_post_url: project.linkedin_post_url ?? "",
     project_name: project.project_name,
     live_url: project.live_url,
     what_you_built: project.what_you_built,
@@ -237,6 +239,16 @@ export default function EditForm({ project }: { project: Project }) {
                   placeholder="https://linkedin.com/in/yourhandle"
                   value={form.builder_linkedin}
                   onChange={(e) => updateForm("builder_linkedin", e.target.value)}
+                />
+              </FormRow>
+              <FormRow>
+                <Label>You went public?</Label>
+                <input
+                  type="url"
+                  className="form-input"
+                  placeholder="The LinkedIn post where you told the world — paste the link"
+                  value={form.linkedin_post_url}
+                  onChange={(e) => updateForm("linkedin_post_url", e.target.value)}
                 />
               </FormRow>
             </Card>

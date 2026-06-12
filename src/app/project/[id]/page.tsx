@@ -179,28 +179,52 @@ export default async function ProjectPage({ params }: Props) {
               </div>
             )}
           </div>
-          {project.builder_linkedin && (
-            <a
-              href={project.builder_linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                marginLeft: "auto",
-                color: "var(--text-muted)",
-                fontSize: 12,
-                textDecoration: "none",
-                display: "flex",
-                alignItems: "center",
-                gap: 4,
-                border: "1px solid var(--border)",
-                borderRadius: 6,
-                padding: "4px 10px",
-                transition: "all 0.15s",
-              }}
-            >
-              LinkedIn ↗
-            </a>
-          )}
+          <div style={{ marginLeft: "auto", display: "flex", gap: 8 }}>
+            {project.builder_linkedin && (
+              <a
+                href={project.builder_linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: "var(--text-muted)",
+                  fontSize: 12,
+                  textDecoration: "none",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 4,
+                  border: "1px solid var(--border)",
+                  borderRadius: 6,
+                  padding: "4px 10px",
+                  transition: "all 0.15s",
+                }}
+              >
+                LinkedIn ↗
+              </a>
+            )}
+            {project.linkedin_post_url && (
+              <a
+                href={project.linkedin_post_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: "var(--gold)",
+                  fontSize: 12,
+                  textDecoration: "none",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 4,
+                  border: "1px solid rgba(245,166,35,0.3)",
+                  borderRadius: 6,
+                  padding: "4px 10px",
+                  background: "var(--gold-dim)",
+                  fontWeight: 600,
+                  transition: "all 0.15s",
+                }}
+              >
+                She went public ↗
+              </a>
+            )}
+          </div>
         </div>
       </div>
 
